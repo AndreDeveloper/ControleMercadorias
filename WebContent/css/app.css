@@ -1,0 +1,19 @@
+.jumbotron{
+	text-align: center;
+	padding: 100px 50px;
+}
+input{
+	margin-bottom: 5px;
+}
+.radio-inline{
+	margin-bottom: 5px;
+}
+.selecionado{
+	background-color: yellow;
+	font-weight: bold;
+
+}
+.container-fluid{
+	text-align: center;
+	padding: 100px 50px;
+}
