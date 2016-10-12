@@ -1,6 +1,5 @@
 .jumbotron{
-	text-align: center;
-	padding: 100px 50px;
+	text-align: center;	
 }
 input{
 	margin-bottom: 5px;
@@ -12,8 +11,4 @@ input{
 	background-color: yellow;
 	font-weight: bold;
 
-}
-.container-fluid{
-	text-align: center;
-	padding: 100px 50px;
 }

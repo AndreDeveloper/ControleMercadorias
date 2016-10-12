@@ -21,28 +21,39 @@ public class MercadoriaControl extends HttpServlet {
 	private static DAO dao;
 	private static final long serialVersionUID = 1L;
 
-    public MercadoriaControl() {
-    	super();
-    	dao = MercadoriaDAO.getInstance();	
-    }
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		List<Mercadoria> mercadorias = dao.selectAll();
-	
-		String json = new Gson().toJson(mercadorias);
-        response.setContentType("application/json");
-        response.getWriter().write(json);
+	public MercadoriaControl() {
+		super();
+		dao = MercadoriaDAO.getInstance();
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		List<Mercadoria> mercadorias = dao.selectAll();
+
+		String json = new Gson().toJson(mercadorias);
+		response.setContentType("application/json");
+		response.getWriter().write(json);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		BufferedReader reader = request.getReader();
 		StringBuffer json = new StringBuffer();
 		String linha = "";
-		while ((linha = reader.readLine()) != null){
+		while ((linha = reader.readLine()) != null) {
 			json.append(linha);
 		}
-		Mercadoria mercadoria = new Gson().fromJson(json.toString(), Mercadoria.class);
-		if (mercadoria!=null){
-			dao.insert(mercadoria);
+		if (json.toString().contains("selecionado")) {
+			Mercadoria[] lista = new Gson().fromJson(json.toString(), Mercadoria[].class);
+			for(Mercadoria m: lista){
+				System.out.println(m.toString());
+				dao.delete(m);
+			}
+		} else {
+			Mercadoria mercadoria = new Gson().fromJson(json.toString(), Mercadoria.class);
+			if (mercadoria != null) {
+				dao.insert(mercadoria);
+			}
 		}
 	}
 

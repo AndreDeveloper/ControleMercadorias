@@ -51,7 +51,8 @@ public class MercadoriaDAO implements DAO{
 	public boolean delete(Mercadoria mercadoria) {
 		try {
 			entityManager.getTransaction().begin();
-			entityManager.remove(mercadoria);
+			entityManager.remove(
+					entityManager.contains(mercadoria) ? mercadoria : entityManager.merge(mercadoria));
 			entityManager.getTransaction().commit();
 			return true;
 		} catch (Exception ex) {

@@ -3,6 +3,7 @@
 <html ng-app="controleMercadorias">
 	<head>
 		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Negociação de Mercadorias</title>
 		<link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
 		<link rel="stylesheet" href="css/app.css">
@@ -12,63 +13,73 @@
 		<script src="services/mercadoriasAPIService.js"></script>
 		<script src="value/configValue.js"></script>
 	</head>
-	<body ng-controller="mercadoriaCtrl">
-		<nav class="navbar navbar-default navbar-fixed-top">
-		    <div class="collapse navbar-collapse" id="myNavbar">
-		      <ul class="nav navbar-nav navbar-left">
-		        <li><a href="#cadastro">CADASTRO</a></li>
-		        <li><a href="#tabela">MERCADORIAS</a></li>
-		      </ul>
-		    </div>
-		  </div>
-		</nav>
-		<div id="cadastro" class="jumbotron container-fluid">
+	<body ng-controller="mercadoriaCtrl" class="container">
+		<div class="jumbotron">
 			<div>
-					<h1><strong>Negociação de Mercadorias</strong></h1>
-					<h4><strong>Aqui é o melhor lugar para compra e venda de produtos diversos</strong></h4>
+				<h1><strong>Negociação de Mercadorias</strong></h1>
+				<h4><strong>Aqui é o melhor lugar para compra e venda de produtos diversos</strong></h4>
 			</div>
 			<hr/>
 			<h5>Cadastre sua mercadoria!</h5>
 			<div>
-				<form name="formMercadorias" class="col-md-offset-2 col-md-8">
-					<input ng-model="mercadoria.codigo" ng-required="true" class="form-control " type="text" name="codigo" placeholder="Código">
+				
+				<form name="formMercadorias">
+					<div ng-show="formMercadorias.codigo.$error.required && formMercadorias.codigo.$dirty" class="alert alert-danger">
+						O campo "código" não pode ser vazio
+					</div>
+					<div ng-show="formMercadorias.codigo.$error.pattern && formMercadorias.codigo.$dirty" class="alert alert-danger">
+						O campo "código" aceita somente numeros inteiros
+					</div>
+					<input ng-model="mercadoria.codigo" ng-required="true" ng-pattern="/^[]?([0-9]*\[0-9]+|[0-9]+)$/" class="form-control " type="text" name="codigo" placeholder="Código">
+					<div ng-show="formMercadorias.nome.$error.required && formMercadorias.nome.$dirty" class="alert alert-danger">
+						O campo "nome" não pode ser vazio
+					</div>
 					<input ng-model="mercadoria.nome" ng-required="true" class="form-control " type="text" name="nome" placeholder="Nome">
+					<div ng-show="formMercadorias.tipo.$error.required && formMercadorias.tipo.$dirty" class="alert alert-danger">
+						O campo "tipo" não pode ser vazio
+					</div>
 					<input ng-model="mercadoria.tipo" ng-required="true" class="form-control " type="text" name="tipo" placeholder="Tipo">
-					<input ng-model="mercadoria.quantidade" ng-required="true" class="form-control " type="text" name="quantidade" placeholder="Quantidade">
+					<div ng-show="formMercadorias.quantidade.$error.required && formMercadorias.quantidade.$dirty" class="alert alert-danger">
+						O campo "quantidade" não pode ser vazio
+					</div>
+					<div ng-show="formMercadorias.quantidade.$error.pattern && formMercadorias.quantidade.$dirty" class="alert alert-danger">
+						O campo "quantidade" aceita somente numeros inteiros
+					</div>
+					<input ng-model="mercadoria.quantidade" ng-required="true" ng-pattern="/^[]?([0-9]*\[0-9]+|[0-9]+)$/" class="form-control " type="text" name="quantidade" placeholder="Quantidade">
+					<div ng-show="formMercadorias.preco.$error.required && formMercadorias.preco.$dirty" class="alert alert-danger">
+						O campo "preço" não pode ser vazio
+					</div>
 					<input ng-model="mercadoria.preco" ng-required="true" class="form-control " type="text" name="preco" placeholder="Preço">
-					<label class="radio-inline"><input ng-model="mercadoria.negocio" ng-required="true" type="radio" name="rdNegocio" id="rdNegocio" value="compra">Compra</label>
-					<label class="radio-inline"><input ng-model="mercadoria.negocio" type="radio" name="rdNegocio" id="rdNegocio" value="venda">Venda</label>
+					<label class="radio-inline"><input ng-model="mercadoria.negocio" ng-required="true" type="radio" name="rdNegocio" id="rdNegocio" value="compra"><strong>Compra</strong></label>
+					<label class="radio-inline"><input ng-model="mercadoria.negocio" type="radio" name="rdNegocio" id="rdNegocio" value="venda"><strong>Venda</strong></label>
 					<button ng-disabled="formMercadorias.$invalid" ng-click="adicionarMercadoria(mercadoria)" class="btn btn-primary btn-block">Cadastrar</button>
-					{{mercadorias}}
 				</form>
 			</div>
-		</div>
-		<div id="tabela" class="container-fluid">
-		<div>
-			<h3><strong>Confira nossas mercadorias!</strong></h3>
-		</div>
-		<input type="text" name="busca" ng-model="buscaDeNomes" class="form-control" placeholder="O que vc esta buscando?">
-		<table ng-show="mercadorias.length > 0" class="table table-bordered" >
-			<tr>
-				<th></th>
-				<th><h4>Codigo</h4></th>
-				<th><h4>Nome<h4/></th>
-				<th><h4>Tipo<h4/></th>
-				<th><h4>Quantidade<h4/></th>
-				<th><h4>Preço<h4/></th>
-				<th><h4>Tipo do Negocio<h4/></th>
-			</tr>
-			<tr  ng-class="{selecionado: mercadoria.selecionado}" ng-repeat="mercadoria in mercadorias | filter:buscaDeNomes">
-				<td><input type="checkbox" ng-model="mercadoria.selecionado"></td>
-				<td>{{mercadoria.codigo}}</td>
-				<td>{{mercadoria.nome}}</td>
-				<td>{{mercadoria.tipo}}</td>
-				<td>{{mercadoria.quantidade}}</td>
-				<td>{{mercadoria.preco}}</td>
-				<td>{{mercadoria.negocio}}</td>
-			</tr>
-		</table>
-		<button ng-show="isMercadoriaSelecionada(mercadorias)" class="btn btn-danger btn-block">Excluir</button>
+			<hr/>
+			<div ng-show="mercadorias.length > 0">
+				<input type="text" name="busca" ng-model="buscaDeNomes" class="form-control" placeholder="O que vc esta buscando?">
+				<table class="table table-bordered">
+					<tr>
+						<th></th>
+						<th><h4>Codigo</h4></th>
+						<th><h4>Nome<h4/></th>
+						<th><h4>Tipo<h4/></th>
+						<th><h4>Quantidade<h4/></th>
+						<th><h4>Preço<h4/></th>
+						<th><h4>Tipo do Negocio<h4/></th>
+					</tr>
+					<tr  ng-class="{selecionado: mercadoria.selecionado}" ng-repeat="mercadoria in mercadorias | filter:buscaDeNomes">
+						<td><input type="checkbox" ng-model="mercadoria.selecionado"></td>
+						<td>{{mercadoria.codigo}}</td>
+						<td>{{mercadoria.nome}}</td>
+						<td>{{mercadoria.tipo}}</td>
+						<td>{{mercadoria.quantidade}}</td>
+						<td>{{mercadoria.preco}}</td>
+						<td>{{mercadoria.negocio}}</td>
+					</tr>
+				</table>
+				<button ng-show="isMercadoriaSelecionada(mercadorias)" ng-click="apagarMercadorias(mercadorias)" class="btn btn-danger btn-block">Excluir</button>
+			</div>
 		</div>
 	</body>
 </html>

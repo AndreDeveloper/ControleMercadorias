@@ -1,6 +1,7 @@
 angular.module("controleMercadorias").controller("mercadoriaCtrl", function($scope, mercadoriasAPI){
 	$scope.app = "controleMercadorias";
 	$scope.mercadorias = [];
+	$scope.listaParaDeletar = [];
 	$scope.isMercadoriaSelecionada = function (mercadorias) {
 		return mercadorias.some(function (mercadoria) {
 			return mercadoria.selecionado;
@@ -23,6 +24,15 @@ angular.module("controleMercadorias").controller("mercadoriaCtrl", function($sco
 
 		});
 	};
-	
+	$scope.apagarMercadorias = function (mercadorias) {
+		$scope.listaParaDeletar = mercadorias.filter(function (mercadoria){
+			if (mercadoria.selecionado) return mercadoria;
+		});	
+		var _lista = $scope.listaParaDeletar;
+		mercadoriasAPI.deletarMercadorias(_lista).success(function(data, status){
+			$scope.formMercadorias.$setPristine();
+			carregarMercadorias();
+		});
+	};
 	carregarMercadorias();
 });
