@@ -44,16 +44,24 @@ public class MercadoriaControl extends HttpServlet {
 			json.append(linha);
 		}
 		if (json.toString().contains("selecionado")) {
-			Mercadoria[] lista = new Gson().fromJson(json.toString(), Mercadoria[].class);
-			for(Mercadoria m: lista){
-				System.out.println(m.toString());
-				dao.delete(m);
-			}
+			deletar(json);
 		} else {
-			Mercadoria mercadoria = new Gson().fromJson(json.toString(), Mercadoria.class);
-			if (mercadoria != null) {
-				dao.insert(mercadoria);
-			}
+			inserir(json);
+		}
+	}
+
+	private void inserir(StringBuffer json) {
+		Mercadoria mercadoria = new Gson().fromJson(json.toString(), Mercadoria.class);
+		if (mercadoria != null) {
+			dao.insert(mercadoria);
+		}
+	}
+
+	private void deletar(StringBuffer json) {
+		Mercadoria[] lista = new Gson().fromJson(json.toString(), Mercadoria[].class);
+		for(Mercadoria m: lista){
+			System.out.println(m.toString());
+			dao.delete(m);
 		}
 	}
 

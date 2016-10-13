@@ -6,9 +6,9 @@
       <property name="hibernate.show_sql" value="true" />
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>	
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://sql9.freemysqlhosting.net/sql9139959"/>
-      <property name="javax.persistence.jdbc.user" value="sql9139959"/>
-      <property name="javax.persistence.jdbc.password" value="PIPyCedqYl"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://nada"/>
+      <property name="javax.persistence.jdbc.user" value=""/>
+      <property name="javax.persistence.jdbc.password" value=""/>
     </properties>
   </persistence-unit>
 </persistence>
