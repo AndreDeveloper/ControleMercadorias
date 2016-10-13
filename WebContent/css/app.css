@@ -1,5 +1,20 @@
-.jumbotron{
-	text-align: center;	
+.titulo{
+	margin-top: 15px;
+	text-align: center;
+	background-color: #009688;
+	color: white;	
+	border-left-style: solid double;
+	border-top-style: solid double;
+	border-right-style: solid double;
+	border-radius: 20px 20px 0px 0px;
+}
+.corpo{
+	text-align: center;
+	background-color: #B2DFDB;	
+}
+.container{
+	background-color: black;	
+	background-image: url('../resources/background.jpg');
 }
 input{
 	margin-bottom: 5px;
@@ -8,7 +23,23 @@ input{
 	margin-bottom: 5px;
 }
 .selecionado{
-	background-color: yellow;
+	background-color: #76FF03;
 	font-weight: bold;
-
+}
+th{
+	font-weight: bold;	
+	text-align: center;
+	background-color: #00BCD4;
+}
+tr{
+	background-color: #B2EBF2;
+}
+.btn-danger{
+	margin-bottom: 5px;
+}
+.rodape{
+	background-color: #00796B;
+	border-radius: 0px 0px 20px 20px;
+	text-align: center;
+	margin-bottom: 15px;
 }

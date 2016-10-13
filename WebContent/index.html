@@ -7,22 +7,23 @@
 		<title>Negociação de Mercadorias</title>
 		<link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
 		<link rel="stylesheet" href="css/app.css">
-		<script src="lib/angular/angular.js"></script>		
+		<script src="lib/angular/angular.js"></script>	
+		<script src="lib/angular/angular-locale_pt-br.js"></script>
 		<script src="js/app.js"></script>		
 		<script src="js/controllers/MercadoriaCtrl.js"></script>
 		<script src="services/mercadoriasAPIService.js"></script>
 		<script src="value/configValue.js"></script>
 	</head>
 	<body ng-controller="mercadoriaCtrl" class="container">
-		<div class="jumbotron">
+		<div class="titulo container-fluid" >
 			<div>
 				<h1><strong>Negociação de Mercadorias</strong></h1>
 				<h4><strong>Aqui é o melhor lugar para compra e venda de produtos diversos</strong></h4>
 			</div>
-			<hr/>
+		</div>
+		<div class="corpo container-fluid">
 			<h5>Cadastre sua mercadoria!</h5>
 			<div>
-				
 				<form name="formMercadorias">
 					<div ng-show="formMercadorias.codigo.$error.required && formMercadorias.codigo.$dirty" class="alert alert-danger">
 						O campo "código" não pode ser vazio
@@ -53,7 +54,7 @@
 					<label class="radio-inline"><input ng-model="mercadoria.negocio" ng-required="true" type="radio" name="rdNegocio" id="rdNegocio" value="compra"><strong>Compra</strong></label>
 					<label class="radio-inline"><input ng-model="mercadoria.negocio" type="radio" name="rdNegocio" id="rdNegocio" value="venda"><strong>Venda</strong></label>
 					<button ng-disabled="formMercadorias.$invalid" ng-click="adicionarMercadoria(mercadoria)" class="btn btn-primary btn-block">Cadastrar</button>
-				</form>
+				</form>				
 			</div>
 			<hr/>
 			<div ng-show="mercadorias.length > 0">
@@ -74,12 +75,15 @@
 						<td>{{mercadoria.nome}}</td>
 						<td>{{mercadoria.tipo}}</td>
 						<td>{{mercadoria.quantidade}}</td>
-						<td>{{mercadoria.preco}}</td>
+						<td>{{mercadoria.preco | currency}}</td>
 						<td>{{mercadoria.negocio}}</td>
 					</tr>
 				</table>
 				<button ng-show="isMercadoriaSelecionada(mercadorias)" ng-click="apagarMercadorias(mercadorias)" class="btn btn-danger btn-block">Excluir</button>
 			</div>
+		</div>
+		<div class="rodape">
+			developed by André Barbosa
 		</div>
 	</body>
 </html>
