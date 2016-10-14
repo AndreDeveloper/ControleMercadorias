@@ -8,9 +8,9 @@ import javax.persistence.Persistence;
 
 import br.com.desafiovalemobi.model.Mercadoria;
 
-public class MercadoriaDAO implements DAO{
+public class MercadoriaDAO implements DAO {
 	private static MercadoriaDAO instance;
-	protected EntityManager entityManager;
+	protected static EntityManager entityManager = null;
 
 	public static MercadoriaDAO getInstance() {
 		if (instance == null) {
@@ -21,7 +21,9 @@ public class MercadoriaDAO implements DAO{
 	}
 
 	public MercadoriaDAO() {
-		entityManager = getEntityManager();
+		if (entityManager == null) {
+			entityManager = getEntityManager();
+		}
 	}
 
 	private EntityManager getEntityManager() {
@@ -51,8 +53,7 @@ public class MercadoriaDAO implements DAO{
 	public boolean delete(Mercadoria mercadoria) {
 		try {
 			entityManager.getTransaction().begin();
-			entityManager.remove(
-					entityManager.contains(mercadoria) ? mercadoria : entityManager.merge(mercadoria));
+			entityManager.remove(entityManager.contains(mercadoria) ? mercadoria : entityManager.merge(mercadoria));
 			entityManager.getTransaction().commit();
 			return true;
 		} catch (Exception ex) {

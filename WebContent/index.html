@@ -22,6 +22,9 @@
 			</div>
 		</div>
 		<div class="corpo container-fluid">
+			<div ng-show="erro.Hapened" class="alert alert-danger">
+				{{erro.Message}}
+			</div>
 			<h5>Cadastre sua mercadoria!</h5>
 			<div>
 				<form name="formMercadorias">
@@ -50,15 +53,20 @@
 					<div ng-show="formMercadorias.preco.$error.required && formMercadorias.preco.$dirty" class="alert alert-danger">
 						O campo "preço" não pode ser vazio
 					</div>
-					<input ng-model="mercadoria.preco" ng-required="true" class="form-control " type="text" name="preco" placeholder="Preço">
+					<div ng-show="formMercadorias.preco.$error.pattern && formMercadorias.preco.$dirty" class="alert alert-danger">
+						O campo "preco" aceita somente numeros reais separados por ","
+					</div>
+					<input ng-model="mercadoria.preco" ng-required="true" class="form-control " type="text" name="preco" ng-pattern="/^[]?([0-9]*\,[0-9]+|[0-9]+)$/" placeholder="Preço">
 					<label class="radio-inline"><input ng-model="mercadoria.negocio" ng-required="true" type="radio" name="rdNegocio" id="rdNegocio" value="compra"><strong>Compra</strong></label>
-					<label class="radio-inline"><input ng-model="mercadoria.negocio" type="radio" name="rdNegocio" id="rdNegocio" value="venda"><strong>Venda</strong></label>
+					<label class="radio-inline"><input ng-model="mercadoria.negocio" type="radio" name="rdNegocio" id="rdNegocio" value="venda"><strong>Venda</strong></label>				
 					<button ng-disabled="formMercadorias.$invalid" ng-click="adicionarMercadoria(mercadoria)" class="btn btn-primary btn-block">Cadastrar</button>
 				</form>				
 			</div>
 			<hr/>
 			<div ng-show="mercadorias.length > 0">
-				<input type="text" name="busca" ng-model="buscaDeNomes" class="form-control" placeholder="O que vc esta buscando?">
+				<input type="text" name="
+				
+				busca" ng-model="buscaDeNomes" class="form-control" placeholder="O que vc esta buscando?">
 				<table class="table table-bordered">
 					<tr>
 						<th></th>
