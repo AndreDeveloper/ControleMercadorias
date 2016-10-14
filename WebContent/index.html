@@ -63,11 +63,12 @@
 				</form>				
 			</div>
 			<hr/>
-			<div ng-show="mercadorias.length > 0">
-				<input type="text" name="
-				
-				busca" ng-model="buscaDeNomes" class="form-control" placeholder="O que vc esta buscando?">
-				<table class="table table-bordered">
+			<div class="carrega" ng-show="carregando">
+				<img src="resources/loader.gif"/>
+			</div>
+			<div ng-show="mercadorias.length > 0" >
+				<input type="text" name="busca" ng-model="buscaDeNomes" class="form-control" placeholder="O que vc esta buscando?">
+				<table class="table table-bordered table-responsive">
 					<tr>
 						<th></th>
 						<th><h4>Codigo</h4></th>

@@ -3,23 +3,28 @@ angular.module("controleMercadorias").controller("mercadoriaCtrl", function($sco
 	$scope.mercadorias = [];
 	$scope.listaParaDeletar = [];
 	$scope.erro = [{Hapened: false},{Message: ""}];
+	$scope.carregando = false;
 	$scope.isMercadoriaSelecionada = function (mercadorias) {
 		return mercadorias.some(function (mercadoria) {
 			return mercadoria.selecionado;
 		})
 	}
 	var carregarMercadorias = function(){
+		$scope.carregando = true;
 		mercadoriasAPI.getMercadorias().success(function(data, status){
 			$scope.mercadorias = data;
 			console.log(data);
 			$scope.erro.Hapened = false;
 			$scope.erro.Message = "";
 			console.log($scope.erro);
+			$scope.carregando = false;
 		}).error(function(data,status){
 			console.log($scope.erro);
 			$scope.erro.Hapened = true;
 			$scope.erro.Message = "Não foi possivel carregar a lista de mercadorias, erro: " + status;
+			$scope.carregando = false;
 		});
+		
 	}
 	$scope.adicionarMercadoria = function (mercadoria){
 		var _preco = mercadoria.preco.replace(',','.');
